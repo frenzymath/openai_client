@@ -1,0 +1,10 @@
+name = "openAI_client"
+version = "0.1.0"
+defaultTargets = ["OpenAIClient"]
+
+[[lean_lib]]
+name = "OpenAIClient"
+
+[[require]]
+name = "requests"
+git = "https://github.com/frenzymath/requests.git"
