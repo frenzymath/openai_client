@@ -13,6 +13,7 @@ def getReq (prompt : String) : OpenAIChatRequest := {
   }]
   n := 1
   temperature := 0.7
+  logprobs := true
 }
 
 def chat (prompt : String) : IO OpenAIChatResponse := do

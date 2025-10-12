@@ -6,11 +6,6 @@ structure OpenAIClient where
   apiKey : String := ""
 deriving Inhabited, Repr
 
-structure GenerationOptions where
-  temperature : Float := 0.7
-  num_samples : Nat := 10
-deriving ToJson
-
 structure OpenAIMessage where
   role : String
   content : String
@@ -23,6 +18,7 @@ structure OpenAICompletionRequest where
   temperature : Float := 0.7
   max_tokens : Nat := 8192
   stream : Bool := false
+  logprobs : Bool := false
 deriving ToJson
 
 structure OpenAIChatRequest where
@@ -32,10 +28,23 @@ structure OpenAIChatRequest where
   temperature : Float := 0.7
   max_tokens : Nat := 8192
   stream : Bool := false
+  logprobs : Bool := false
 deriving ToJson
 
+structure OpenAIChatCompletionTokenLogprob where
+  token : String
+  logprob : Float
+deriving FromJson, Repr
+
+structure OpenAIChoiceLogprobs where
+  content: Option (List OpenAIChatCompletionTokenLogprob) := none
+  refusal: Option (List OpenAIChatCompletionTokenLogprob) := none
+deriving FromJson, Repr
+
 structure OpenAIChatChoice where
+  index : Nat
   message : OpenAIMessage
+  logprobs : Option OpenAIChoiceLogprobs := none
 deriving FromJson, Repr
 
 structure OpenAICompletionChoice where
