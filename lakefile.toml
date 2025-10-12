@@ -8,3 +8,4 @@ name = "OpenAIClient"
 [[require]]
 name = "requests"
 git = "https://github.com/frenzymath/requests.git"
+rev = "main"
