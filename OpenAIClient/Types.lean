@@ -1,6 +1,7 @@
-import Lean
+module
+public meta import Lean
 open Lean
-
+public meta section
 structure OpenAIClient where
   baseUrl : String
   apiKey : String := ""

@@ -1,8 +1,9 @@
-import Requests
-import OpenAIClient.Types
+module
+public meta import Requests
+public meta import OpenAIClient.Types
 
 open Lean
-
+public meta section
 def getOpenAIRequestHeaders (apiKey : String) : Json :=
   if apiKey.isEmpty then
     json% {
