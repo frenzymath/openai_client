@@ -4,26 +4,26 @@ public meta import OpenAIClient.Types
 
 open Lean
 public meta section
-def getOpenAIRequestHeaders (apiKey : String) : Json :=
+def getOpenAIRequestHeaders (apiKey : String) : Requests.Headers :=
   if apiKey.isEmpty then
-    json% {
-      "accept" : "application/json",
-      "Content-Type" : "application/json"
-    }
+    #[
+      ("Accept", "application/json"),
+      ("Content-Type", "application/json")
+    ]
   else
-    json% {
-      "accept" : "application/json",
-      "Content-Type" : "application/json",
-      "Authorization" : $(s!"Bearer {apiKey}")
-    }
+    #[
+      ("Accept", "application/json"),
+      ("Content-Type", "application/json"),
+      ("Authorization", s!"Bearer {apiKey}")
+    ]
 
 namespace OpenAIClient
 
-def generateCompletion (client : OpenAIClient) (req : OpenAICompletionRequest) : IO OpenAICompletionResponse := do
+def generateCompletion (client : OpenAIClient) (req : OpenAICompletionRequest) : Requests.RequestIO OpenAICompletionResponse := do
   let completeUrl := client.baseUrl ++ "/completions"
   Requests.post completeUrl req <| getOpenAIRequestHeaders client.apiKey
 
-def generateChat (client : OpenAIClient) (req : OpenAIChatRequest) : IO OpenAIChatResponse := do
+def generateChat (client : OpenAIClient) (req : OpenAIChatRequest) : Requests.RequestIO OpenAIChatResponse := do
   let chatUrl := client.baseUrl ++ "/chat/completions"
   Requests.post chatUrl req <| getOpenAIRequestHeaders client.apiKey
 
